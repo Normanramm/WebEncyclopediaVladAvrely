@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Web Encyclopedia Vlad Avrely — HTML5 • CSS3 • JS</title>
+  <title>Web Encyclopedia Vlad Avrely — HTML5 • CSS3 • JS • Python</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <style>
     :root {
       --bg-body: #f5f5f7;
@@ -24,6 +24,8 @@
       --syn-str: #48dbfb;
       --syn-comment: #5f6a7a;
       --syn-kw: #c678dd;
+      --python-primary: #3776ab;
+      --python-secondary: #ffd343;
     }
     @media (prefers-color-scheme: dark) {
       :root {
@@ -53,11 +55,9 @@
       color: var(--accent);
       text-decoration: none;
     }
-    code,
-    pre {
+    code, pre {
       font-family: "SF Mono", Monaco, Consolas, monospace;
     }
-
     /* Header */
     header {
       position: sticky;
@@ -105,6 +105,7 @@
       background: rgba(118, 118, 128, 0.12);
       padding: 4px;
       border-radius: 12px;
+      overflow-x: auto;
     }
     .tab {
       padding: 8px 20px;
@@ -116,11 +117,15 @@
       cursor: pointer;
       color: var(--text-sec);
       transition: all 0.2s;
+      white-space: nowrap;
     }
     .tab.active {
       background: var(--bg-card);
       color: var(--text-main);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+    .tab:hover:not(.active) {
+      color: var(--text-main);
     }
     .search-box {
       position: relative;
@@ -147,7 +152,6 @@
       transform: translateY(-50%);
       color: var(--text-sec);
     }
-
     /* Main */
     main {
       max-width: 1400px;
@@ -190,7 +194,6 @@
       max-width: 600px;
       margin: 0 auto;
     }
-
     /* Grid & Cards */
     .grid {
       display: grid;
@@ -251,6 +254,10 @@
       background: #fff3e0;
       color: #ef6c00;
     }
+    .b-python {
+      background: #fff9e6;
+      color: #3776ab;
+    }
     .card-body {
       padding: 24px;
       display: flex;
@@ -263,7 +270,6 @@
       color: var(--text-sec);
       line-height: 1.6;
     }
-
     /* Code & Preview */
     .code-container {
       background: var(--bg-code);
@@ -311,7 +317,6 @@
       margin: 0;
       white-space: pre;
     }
-
     .preview-container {
       background: var(--bg-preview);
       border: 2px dashed var(--border);
@@ -342,7 +347,6 @@
     .preview-content {
       width: 100%;
     }
-
     /* Tables */
     .attr-table {
       width: 100%;
@@ -408,7 +412,6 @@
         background: rgba(72, 219, 251, 0.15);
       }
     }
-
     /* Syntax */
     .t {
       color: var(--syn-tag);
@@ -426,7 +429,6 @@
     .k {
       color: var(--syn-kw);
     }
-
     /* Footer & Toast */
     footer {
       text-align: center;
@@ -456,6 +458,59 @@
       transform: translateY(0);
       opacity: 1;
     }
+    /* Form Input Styles */
+    .form-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .form-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .form-label input[type="checkbox"],
+    .form-label input[type="radio"] {
+      width: auto;
+      margin: 0;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .tabs {
+        justify-content: flex-start;
+      }
+      .search-box {
+        width: 100%;
+      }
+      .section-title {
+        font-size: 32px;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -469,13 +524,14 @@
         <button class="tab active" onclick="switchTab('html')">HTML5</button>
         <button class="tab" onclick="switchTab('css')">CSS3</button>
         <button class="tab" onclick="switchTab('js')">JavaScript</button>
+        <button class="tab" onclick="switchTab('python')">Python</button>
       </div>
       <div class="search-box">
         <span class="search-icon">🔍</span>
         <input
           type="text"
           class="search-input"
-          placeholder="Поиск (video, audio, form...)"
+          placeholder="Поиск (video, audio, flex, class...)"
           onkeyup="filterCards()"
         />
       </div>
@@ -506,8 +562,8 @@
               <pre class="code-block"><span class="c">&lt;!DOCTYPE html&gt;</span>
 <span class="t">&lt;html</span> <span class="a">lang</span>=<span class="s">"ru"</span><span class="t">&gt;</span>
 <span class="t">&lt;head&gt;</span>
-<span class="t">&lt;meta</span> <span class="a">charset</span>=<span class="s">"UTF-8"</span><span class="t">&gt;</span>
-<span class="t">&lt;title&gt;</span>Заголовок<span class="t">&lt;/title&gt;</span>
+  <span class="t">&lt;meta</span> <span class="a">charset</span>=<span class="s">"UTF-8"</span><span class="t">&gt;</span>
+  <span class="t">&lt;title&gt;</span>Заголовок<span class="t">&lt;/title&gt;</span>
 <span class="t">&lt;/head&gt;</span>
 <span class="t">&lt;body&gt;</span>Контент<span class="t">&lt;/body&gt;</span>
 <span class="t">&lt;/html&gt;</span></pre>
@@ -627,18 +683,20 @@
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="c">&lt;!-- Маркированный --&gt;</span>
 <span class="t">&lt;ul&gt;</span>
-<span class="t">&lt;li&gt;</span>Пункт 1<span class="t">&lt;/li&gt;</span>
-<span class="t">&lt;li&gt;</span>Пункт 2<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>Пункт 1<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>Пункт 2<span class="t">&lt;/li&gt;</span>
 <span class="t">&lt;/ul&gt;</span>
+
 <span class="c">&lt;!-- Нумерованный --&gt;</span>
 <span class="t">&lt;ol&gt;</span>
-<span class="t">&lt;li&gt;</span>Шаг 1<span class="t">&lt;/li&gt;</span>
-<span class="t">&lt;li&gt;</span>Шаг 2<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>Шаг 1<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>Шаг 2<span class="t">&lt;/li&gt;</span>
 <span class="t">&lt;/ol&gt;</span>
+
 <span class="c">&lt;!-- Определений --&gt;</span>
 <span class="t">&lt;dl&gt;</span>
-<span class="t">&lt;dt&gt;</span>HTML<span class="t">&lt;/dt&gt;</span>
-<span class="t">&lt;dd&gt;</span>Язык разметки<span class="t">&lt;/dd&gt;</span>
+  <span class="t">&lt;dt&gt;</span>HTML<span class="t">&lt;/dt&gt;</span>
+  <span class="t">&lt;dd&gt;</span>Язык разметки<span class="t">&lt;/dd&gt;</span>
 <span class="t">&lt;/dl&gt;</span></pre>
             </div>
             <div class="preview-container" style="align-items: flex-start;">
@@ -687,12 +745,16 @@
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="c">&lt;!-- Обычная --&gt;</span>
 <span class="t">&lt;a</span> <span class="a">href</span>=<span class="s">"https://apple.com"</span><span class="t">&gt;</span>Apple<span class="t">&lt;/a&gt;</span>
+
 <span class="c">&lt;!-- Новая вкладка --&gt;</span>
 <span class="t">&lt;a</span> <span class="a">href</span>=<span class="s">"..."</span> <span class="a">target</span>=<span class="s">"_blank"</span><span class="t">&gt;</span>Новая<span class="t">&lt;/a&gt;</span>
+
 <span class="c">&lt;!-- Email --&gt;</span>
 <span class="t">&lt;a</span> <span class="a">href</span>=<span class="s">"mailto:test@mail.com"</span><span class="t">&gt;</span>Email<span class="t">&lt;/a&gt;</span>
+
 <span class="c">&lt;!-- Телефон --&gt;</span>
 <span class="t">&lt;a</span> <span class="a">href</span>=<span class="s">"tel:+79990000000"</span><span class="t">&gt;</span>Телефон<span class="t">&lt;/a&gt;</span>
+
 <span class="c">&lt;!-- Якорь --&gt;</span>
 <span class="t">&lt;a</span> <span class="a">href</span>=<span class="s">"#section"</span><span class="t">&gt;</span>Якорь<span class="t">&lt;/a&gt;</span></pre>
             </div>
@@ -753,12 +815,12 @@
               <span class="code-label">CODE</span>
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="t">&lt;img</span>
-<span class="a">src</span>=<span class="s">"https://via.placeholder.com/150"</span>
-<span class="a">alt</span>=<span class="s">"Описание"</span>
-<span class="a">width</span>=<span class="s">"150"</span>
-<span class="a">height</span>=<span class="s">"150"</span>
-<span class="a">loading</span>=<span class="s">"lazy"</span>
-<span class="a">style</span>=<span class="s">"border-radius:12px;"</span>
+  <span class="a">src</span>=<span class="s">"https://via.placeholder.com/150"</span>
+  <span class="a">alt</span>=<span class="s">"Описание"</span>
+  <span class="a">width</span>=<span class="s">"150"</span>
+  <span class="a">height</span>=<span class="s">"150"</span>
+  <span class="a">loading</span>=<span class="s">"lazy"</span>
+  <span class="a">style</span>=<span class="s">"border-radius:12px;"</span>
 <span class="t">&gt;</span></pre>
             </div>
             <div class="preview-container">
@@ -812,22 +874,23 @@
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="c">&lt;!-- Свое видео --&gt;</span>
 <span class="t">&lt;video</span>
-<span class="a">width</span>=<span class="s">"320"</span>
-<span class="a">height</span>=<span class="s">"240"</span>
-<span class="a">controls</span>
-<span class="a">autoplay</span>
-<span class="a">loop</span>
-<span class="a">muted</span>
-<span class="a">poster</span>=<span class="s">"thumb.jpg"</span>
+  <span class="a">width</span>=<span class="s">"320"</span>
+  <span class="a">height</span>=<span class="s">"240"</span>
+  <span class="a">controls</span>
+  <span class="a">autoplay</span>
+  <span class="a">loop</span>
+  <span class="a">muted</span>
+  <span class="a">poster</span>=<span class="s">"thumb.jpg"</span>
 <span class="t">&gt;</span>
-<span class="t">&lt;source</span> <span class="a">src</span>=<span class="s">"movie.mp4"</span><span class="t">&gt;</span>
+  <span class="t">&lt;source</span> <span class="a">src</span>=<span class="s">"movie.mp4"</span><span class="t">&gt;</span>
 <span class="t">&lt;/video&gt;</span>
+
 <span class="c">&lt;!-- YouTube --&gt;</span>
 <span class="t">&lt;iframe</span>
-<span class="a">width</span>=<span class="s">"320"</span>
-<span class="a">height</span>=<span class="s">"200"</span>
-<span class="a">src</span>=<span class="s">"https://youtube.com/embed/ID"</span>
-<span class="a">allowfullscreen</span>
+  <span class="a">width</span>=<span class="s">"320"</span>
+  <span class="a">height</span>=<span class="s">"200"</span>
+  <span class="a">src</span>=<span class="s">"https://youtube.com/embed/ID"</span>
+  <span class="a">allowfullscreen</span>
 <span class="t">&gt;&lt;/iframe&gt;</span></pre>
             </div>
             <div class="preview-container" style="flex-direction: column; gap: 16px;">
@@ -878,7 +941,7 @@
           </div>
         </article>
 
-        <!-- 8. AUDIO (НОВЫЙ РАЗДЕЛ) -->
+        <!-- 8. AUDIO -->
         <article class="card" data-tags="audio source track">
           <div class="card-header">
             <span class="card-title">Аудио &lt;audio&gt;</span>
@@ -1031,25 +1094,25 @@
               <span class="code-label">CODE</span>
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="t">&lt;table&gt;</span>
-<span class="t">&lt;thead&gt;</span>
-<span class="t">&lt;tr&gt;</span>
-<span class="t">&lt;th&gt;</span>Имя<span class="t">&lt;/th&gt;</span>
-<span class="t">&lt;th&gt;</span>Возраст<span class="t">&lt;/th&gt;</span>
-<span class="t">&lt;th&gt;</span>Город<span class="t">&lt;/th&gt;</span>
-<span class="t">&lt;/tr&gt;</span>
-<span class="t">&lt;/thead&gt;</span>
-<span class="t">&lt;tbody&gt;</span>
-<span class="t">&lt;tr&gt;</span>
-<span class="t">&lt;td&gt;</span>Влад<span class="t">&lt;/td&gt;</span>
-<span class="t">&lt;td&gt;</span>25<span class="t">&lt;/td&gt;</span>
-<span class="t">&lt;td&gt;</span>Купертино<span class="t">&lt;/td&gt;</span>
-<span class="t">&lt;/tr&gt;</span>
-<span class="t">&lt;tr&gt;</span>
-<span class="t">&lt;td&gt;</span>Надя<span class="t">&lt;/td&gt;</span>
-<span class="t">&lt;td&gt;</span>20<span class="t">&lt;/td&gt;</span>
-<span class="t">&lt;td&gt;</span>Лос-Анджелес<span class="t">&lt;/td&gt;</span>
-<span class="t">&lt;/tr&gt;</span>
-<span class="t">&lt;/tbody&gt;</span>
+  <span class="t">&lt;thead&gt;</span>
+    <span class="t">&lt;tr&gt;</span>
+      <span class="t">&lt;th&gt;</span>Имя<span class="t">&lt;/th&gt;</span>
+      <span class="t">&lt;th&gt;</span>Возраст<span class="t">&lt;/th&gt;</span>
+      <span class="t">&lt;th&gt;</span>Город<span class="t">&lt;/th&gt;</span>
+    <span class="t">&lt;/tr&gt;</span>
+  <span class="t">&lt;/thead&gt;</span>
+  <span class="t">&lt;tbody&gt;</span>
+    <span class="t">&lt;tr&gt;</span>
+      <span class="t">&lt;td&gt;</span>Влад<span class="t">&lt;/td&gt;</span>
+      <span class="t">&lt;td&gt;</span>25<span class="t">&lt;/td&gt;</span>
+      <span class="t">&lt;td&gt;</span>Купертино<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;/tr&gt;</span>
+    <span class="t">&lt;tr&gt;</span>
+      <span class="t">&lt;td&gt;</span>Надя<span class="t">&lt;/td&gt;</span>
+      <span class="t">&lt;td&gt;</span>20<span class="t">&lt;/td&gt;</span>
+      <span class="t">&lt;td&gt;</span>Лос-Анджелес<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;/tr&gt;</span>
+  <span class="t">&lt;/tbody&gt;</span>
 <span class="t">&lt;/table&gt;</span></pre>
             </div>
             <div class="preview-container" style="padding: 0; overflow: visible;">
@@ -1121,7 +1184,6 @@
   <span class="a">autocomplete</span>=<span class="s">"on"</span>
   <span class="a">novalidate</span>
 <span class="t">&gt;</span>
-
   <span class="c">&lt;!-- Текстовые поля --&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"text"</span> <span class="a">name</span>=<span class="s">"username"</span> <span class="a">placeholder</span>=<span class="s">"Имя"</span> <span class="a">required</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"email"</span> <span class="a">name</span>=<span class="s">"email"</span> <span class="a">placeholder</span>=<span class="s">"Email"</span><span class="t">&gt;</span>
@@ -1129,31 +1191,26 @@
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"tel"</span> <span class="a">name</span>=<span class="s">"phone"</span> <span class="a">pattern</span>=<span class="s">"[0-9]{10}"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"url"</span> <span class="a">name</span>=<span class="s">"website"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"search"</span> <span class="a">name</span>=<span class="s">"query"</span><span class="t">&gt;</span>
-
   <span class="c">&lt;!-- Числовые поля --&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"number"</span> <span class="a">name</span>=<span class="s">"age"</span> <span class="a">min</span>=<span class="s">"0"</span> <span class="a">max</span>=<span class="s">"100"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"range"</span> <span class="a">name</span>=<span class="s">"volume"</span> <span class="a">min</span>=<span class="s">"0"</span> <span class="a">max</span>=<span class="s">"100"</span><span class="t">&gt;</span>
-
   <span class="c">&lt;!-- Дата и время --&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"date"</span> <span class="a">name</span>=<span class="s">"birthdate"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"time"</span> <span class="a">name</span>=<span class="s">"meeting"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"datetime-local"</span> <span class="a">name</span>=<span class="s">"event"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"month"</span> <span class="a">name</span>=<span class="s">"billing"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"week"</span> <span class="a">name</span>=<span class="s">"delivery"</span><span class="t">&gt;</span>
-
   <span class="c">&lt;!-- Выбор --&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"color"</span> <span class="a">name</span>=<span class="s">"favorite"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"file"</span> <span class="a">name</span>=<span class="s">"document"</span> <span class="a">accept</span>=<span class="s">".pdf,.doc"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"checkbox"</span> <span class="a">name</span>=<span class="s">"subscribe"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"radio"</span> <span class="a">name</span>=<span class="s">"gender"</span> <span class="a">value</span>=<span class="s">"male"</span><span class="t">&gt;</span>
-
   <span class="c">&lt;!-- Скрытые и кнопки --&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"hidden"</span> <span class="a">name</span>=<span class="s">"token"</span> <span class="a">value</span>=<span class="s">"abc123"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"submit"</span> <span class="a">value</span>=<span class="s">"Отправить"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"reset"</span> <span class="a">value</span>=<span class="s">"Сброс"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"button"</span> <span class="a">value</span>=<span class="s">"Кнопка"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"image"</span> <span class="a">src</span>=<span class="s">"submit.png"</span><span class="t">&gt;</span>
-
   <span class="c">&lt;!-- Другие элементы --&gt;</span>
   <span class="t">&lt;select</span> <span class="a">name</span>=<span class="s">"city"</span><span class="t">&gt;</span>
     <span class="t">&lt;option</span> <span class="a">value</span>=<span class="s">"msk"</span><span class="t">&gt;</span>Москва<span class="t">&lt;/option&gt;</span>
@@ -1390,10 +1447,10 @@
               <pre class="code-block"><span class="t">&lt;header&gt;</span>Шапка сайта<span class="t">&lt;/header&gt;</span>
 <span class="t">&lt;nav&gt;</span>Меню навигации<span class="t">&lt;/nav&gt;</span>
 <span class="t">&lt;main&gt;</span>
-<span class="t">&lt;article&gt;</span>
-<span class="t">&lt;section&gt;</span>Раздел статьи<span class="t">&lt;/section&gt;</span>
-<span class="t">&lt;/article&gt;</span>
-<span class="t">&lt;aside&gt;</span>Боковая панель<span class="t">&lt;/aside&gt;</span>
+  <span class="t">&lt;article&gt;</span>
+    <span class="t">&lt;section&gt;</span>Раздел статьи<span class="t">&lt;/section&gt;</span>
+  <span class="t">&lt;/article&gt;</span>
+  <span class="t">&lt;aside&gt;</span>Боковая панель<span class="t">&lt;/aside&gt;</span>
 <span class="t">&lt;/main&gt;</span>
 <span class="t">&lt;footer&gt;</span>Подвал сайта<span class="t">&lt;/footer&gt;</span></pre>
             </div>
@@ -1425,8 +1482,8 @@
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="c">&lt;!-- Аккордеон --&gt;</span>
 <span class="t">&lt;details</span> <span class="a">open</span><span class="t">&gt;</span>
-<span class="t">&lt;summary&gt;</span>Нажмите чтобы раскрыть<span class="t">&lt;/summary&gt;</span>
-<span class="t">&lt;p&gt;</span>Скрытый контент здесь...<span class="t">&lt;/p&gt;</span>
+  <span class="t">&lt;summary&gt;</span>Нажмите чтобы раскрыть<span class="t">&lt;/summary&gt;</span>
+  <span class="t">&lt;p&gt;</span>Скрытый контент здесь...<span class="t">&lt;/p&gt;</span>
 <span class="t">&lt;/details&gt;</span></pre>
             </div>
             <div class="preview-container" style="align-items: flex-start;">
@@ -1491,12 +1548,12 @@
               <span class="code-label">CSS</span>
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="k">.box</span> {
-<span class="a">width</span>: <span class="s">200px</span>;
-<span class="a">height</span>: <span class="s">100px</span>;
-<span class="a">padding</span>: <span class="s">20px</span>;
-<span class="a">margin</span>: <span class="s">10px</span>;
-<span class="a">border</span>: <span class="s">3px solid #0071e3</span>;
-<span class="a">border-radius</span>: <span class="s">12px</span>;
+  <span class="a">width</span>: <span class="s">200px</span>;
+  <span class="a">height</span>: <span class="s">100px</span>;
+  <span class="a">padding</span>: <span class="s">20px</span>;
+  <span class="a">margin</span>: <span class="s">10px</span>;
+  <span class="a">border</span>: <span class="s">3px solid #0071e3</span>;
+  <span class="a">border-radius</span>: <span class="s">12px</span>;
 }</pre>
             </div>
             <div class="preview-container" style="align-items: center;">
@@ -1523,10 +1580,10 @@
               <span class="code-label">CSS</span>
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="k">.container</span> {
-<span class="a">display</span>: <span class="s">flex</span>;
-<span class="a">justify-content</span>: <span class="s">center</span>;
-<span class="a">align-items</span>: <span class="s">center</span>;
-<span class="a">gap</span>: <span class="s">16px</span>;
+  <span class="a">display</span>: <span class="s">flex</span>;
+  <span class="a">justify-content</span>: <span class="s">center</span>;
+  <span class="a">align-items</span>: <span class="s">center</span>;
+  <span class="a">gap</span>: <span class="s">16px</span>;
 }</pre>
             </div>
             <div class="preview-container" style="padding: 20px;">
@@ -1552,9 +1609,9 @@
               <span class="code-label">CSS</span>
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="k">.grid</span> {
-<span class="a">display</span>: <span class="s">grid</span>;
-<span class="a">grid-template-columns</span>: <span class="s">1fr 1fr 1fr</span>;
-<span class="a">gap</span>: <span class="s">12px</span>;
+  <span class="a">display</span>: <span class="s">grid</span>;
+  <span class="a">grid-template-columns</span>: <span class="s">1fr 1fr 1fr</span>;
+  <span class="a">gap</span>: <span class="s">12px</span>;
 }</pre>
             </div>
             <div class="preview-container" style="padding: 20px;">
@@ -1580,11 +1637,11 @@
               <span class="code-label">CSS</span>
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="k">.text</span> {
-<span class="a">font-size</span>: <span class="s">16px</span>;
-<span class="a">font-weight</span>: <span class="s">700</span>;
-<span class="a">color</span>: <span class="s">var(--accent)</span>;
-<span class="a">text-align</span>: <span class="s">center</span>;
-<span class="a">text-shadow</span>: <span class="s">1px 1px 2px rgba(0,0,0,0.2)</span>;
+  <span class="a">font-size</span>: <span class="s">16px</span>;
+  <span class="a">font-weight</span>: <span class="s">700</span>;
+  <span class="a">color</span>: <span class="s">var(--accent)</span>;
+  <span class="a">text-align</span>: <span class="s">center</span>;
+  <span class="a">text-shadow</span>: <span class="s">1px 1px 2px rgba(0,0,0,0.2)</span>;
 }</pre>
             </div>
             <div class="preview-container" style="align-items: center;">
@@ -1610,10 +1667,10 @@
               <span class="code-label">CSS</span>
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="k">.box</span> {
-<span class="a">background</span>: <span class="s">linear-gradient(135deg, #0071e3, #bf5af2)</span>;
-<span class="a">border-radius</span>: <span class="s">16px</span>;
-<span class="a">box-shadow</span>: <span class="s">0 8px 24px rgba(0,113,227,0.3)</span>;
-<span class="a">transform</span>: <span class="s">rotate(-3deg)</span>;
+  <span class="a">background</span>: <span class="s">linear-gradient(135deg, #0071e3, #bf5af2)</span>;
+  <span class="a">border-radius</span>: <span class="s">16px</span>;
+  <span class="a">box-shadow</span>: <span class="s">0 8px 24px rgba(0,113,227,0.3)</span>;
+  <span class="a">transform</span>: <span class="s">rotate(-3deg)</span>;
 }</pre>
             </div>
             <div class="preview-container" style="padding: 30px; gap: 16px; flex-wrap: wrap;">
@@ -1664,8 +1721,10 @@
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="c">/* Мобильные */</span>
 <span class="k">@media</span> (<span class="a">max-width</span>: <span class="s">600px</span>) { ... }
+
 <span class="c">/* Темная тема */</span>
 <span class="k">@media</span> (<span class="a">prefers-color-scheme</span>: <span class="s">dark</span>) { ... }
+
 <span class="c">/* Печать */</span>
 <span class="k">@media</span> <span class="k">print</span> { ... }</pre>
             </div>
@@ -1739,7 +1798,7 @@
               <span class="code-label">JS</span>
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block"><span class="k">function</span> <span class="k">sum</span>(a, b) {
-<span class="k">return</span> a + b;
+  <span class="k">return</span> a + b;
 }
 <span class="k">const</span> <span class="k">mult</span> = (a, b) => a * b;
 <span class="k">sum</span>(<span class="s">2</span>, <span class="s">3</span>); <span class="c">// 5</span></pre>
@@ -1795,8 +1854,8 @@ el.classList.<span class="k">add</span>(<span class="s">"active"</span>);</pre>
               <span class="code-label">JS</span>
               <button class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre class="code-block">btn.<span class="k">addEventListener</span>(<span class="s">"click"</span>, (e) => {
-e.<span class="k">preventDefault</span>();
-console.<span class="k">log</span>(<span class="s">"Click!"</span>);
+  e.<span class="k">preventDefault</span>();
+  console.<span class="k">log</span>(<span class="s">"Click!"</span>);
 });</pre>
             </div>
             <div class="preview-container" style="align-items: center; flex-wrap: wrap; gap: 12px;">
@@ -1805,6 +1864,422 @@ console.<span class="k">log</span>(<span class="s">"Click!"</span>);
               <div onmouseover="this.style.background='#e8f5e9'" onmouseout="this.style.background='var(--bg-preview)'" style="padding: 10px 20px; background: var(--bg-preview); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; cursor: pointer; transition: 0.2s;">mouseover</div>
               <input type="text" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'" placeholder="focus" style="padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; width: 120px;"/>
             </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= PYTHON SECTION ================= -->
+    <section id="python" class="section">
+      <div class="section-header">
+        <h1 class="section-title" style="background: linear-gradient(135deg, #3776ab, #ffd343); -webkit-background-clip: text;">Python Полная Справка</h1>
+        <p class="section-desc">Синтаксис, ООП, методы, структуры данных</p>
+      </div>
+      <div class="grid">
+        <!-- 1. BASICS -->
+        <article class="card">
+          <div class="card-header">
+            <span class="card-title">Базовый синтаксис</span>
+            <span class="badge b-python">Base</span>
+          </div>
+          <div class="card-body">
+            <div class="code-container">
+              <span class="code-label">PYTHON</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="code-block"><span class="c"># Переменные</span>
+name = <span class="s">"Alice"</span>
+age = <span class="s">25</span>
+height = <span class="s">1.75</span>
+is_student = <span class="k">True</span>
+
+<span class="c"># Вывод</span>
+<span class="k">print</span>(<span class="s">f"Привет, {name}!"</span>)
+<span class="k">print</span>(<span class="s">f"Возраст: {age}"</span>)
+
+<span class="c"># Ввод</span>
+user_input = <span class="k">input</span>(<span class="s">"Введите имя: "</span>)
+
+<span class="c"># Типы данных</span>
+<span class="k">type</span>(name)  <span class="c"># &lt;class 'str'&gt;</span>
+<span class="k">type</span>(age)   <span class="c"># &lt;class 'int'&gt;</span>
+<span class="k">type</span>(height) <span class="c"># &lt;class 'float'&gt;</span>
+<span class="k">type</span>(is_student) <span class="c"># &lt;class 'bool'&gt;</span></pre>
+            </div>
+            <div class="preview-container" style="align-items: flex-start;">
+              <span class="preview-label">🖥️ OUTPUT</span>
+              <div style="font-family: monospace; font-size: 12px; width: 100%; color: var(--text-sec);">
+                <div style="margin-bottom: 6px;">Привет, Alice!</div>
+                <div style="margin-bottom: 6px;">Возраст: 25</div>
+                <div style="margin-bottom: 6px;">&lt;class 'str'&gt;</div>
+                <div>&lt;class 'int'&gt;</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. DATA STRUCTURES -->
+        <article class="card">
+          <div class="card-header">
+            <span class="card-title">Структуры данных</span>
+            <span class="badge b-python">Data</span>
+          </div>
+          <div class="card-body">
+            <div class="code-container">
+              <span class="code-label">PYTHON</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="code-block"><span class="c"># Список (List)</span>
+fruits = [<span class="s">"apple"</span>, <span class="s">"banana"</span>, <span class="s">"cherry"</span>]
+fruits.append(<span class="s">"orange"</span>)
+fruits.remove(<span class="s">"banana"</span>)
+<span class="k">print</span>(fruits[<span class="s">0</span>])  <span class="c"># apple</span>
+
+<span class="c"># Кортеж (Tuple)</span>
+coordinates = (<span class="s">10</span>, <span class="s">20</span>)
+x, y = coordinates
+
+<span class="c"># Словарь (Dict)</span>
+person = {
+    <span class="s">"name"</span>: <span class="s">"Alice"</span>,
+    <span class="s">"age"</span>: <span class="s">25</span>,
+    <span class="s">"city"</span>: <span class="s">"Moscow"</span>
+}
+<span class="k">print</span>(person[<span class="s">"name"</span>])  <span class="c"># Alice</span>
+
+<span class="c"># Множество (Set)</span>
+unique_nums = {<span class="s">1</span>, <span class="s">2</span>, <span class="s">3</span>, <span class="s">3</span>, <span class="s">2</span>}  <span class="c"># {1, 2, 3}</span></pre>
+            </div>
+            <table class="attr-table">
+              <tr>
+                <th>Структура</th>
+                <th>Изменяемая</th>
+                <th>Синтаксис</th>
+              </tr>
+              <tr>
+                <td><span class="attr-name">list</span></td>
+                <td>✅ Да</td>
+                <td><span class="attr-val">[1, 2, 3]</span></td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">tuple</span></td>
+                <td>❌ Нет</td>
+                <td><span class="attr-val">(1, 2, 3)</span></td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">dict</span></td>
+                <td>✅ Да</td>
+                <td><span class="attr-val">{"key": "value"}</span></td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">set</span></td>
+                <td>✅ Да</td>
+                <td><span class="attr-val">{1, 2, 3}</span></td>
+              </tr>
+            </table>
+          </div>
+        </article>
+
+        <!-- 3. CONTROL FLOW -->
+        <article class="card">
+          <div class="card-header">
+            <span class="card-title">Управляющие конструкции</span>
+            <span class="badge b-python">Flow</span>
+          </div>
+          <div class="card-body">
+            <div class="code-container">
+              <span class="code-label">PYTHON</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="code-block"><span class="c"># if-elif-else</span>
+age = <span class="s">18</span>
+<span class="k">if</span> age &lt; <span class="s">13</span>:
+    <span class="k">print</span>(<span class="s">"Ребенок"</span>)
+<span class="k">elif</span> age &lt; <span class="s">18</span>:
+    <span class="k">print</span>(<span class="s">"Подросток"</span>)
+<span class="k">else</span>:
+    <span class="k">print</span>(<span class="s">"Взрослый"</span>)
+
+<span class="c"># for цикл</span>
+<span class="k">for</span> i <span class="k">in</span> <span class="k">range</span>(<span class="s">5</span>):
+    <span class="k">print</span>(i)  <span class="c"># 0, 1, 2, 3, 4</span>
+
+<span class="c"># while цикл</span>
+count = <span class="s">0</span>
+<span class="k">while</span> count &lt; <span class="s">5</span>:
+    <span class="k">print</span>(count)
+    count += <span class="s">1</span>
+
+<span class="c"># List comprehension</span>
+squares = [x**<span class="s">2</span> <span class="k">for</span> x <span class="k">in</span> <span class="k">range</span>(<span class="s">10</span>)]</pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4. FUNCTIONS -->
+        <article class="card">
+          <div class="card-header">
+            <span class="card-title">Функции и методы</span>
+            <span class="badge b-python">Functions</span>
+          </div>
+          <div class="card-body">
+            <div class="code-container">
+              <span class="code-label">PYTHON</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="code-block"><span class="c"># Обычная функция</span>
+<span class="k">def</span> <span class="k">greet</span>(name):
+    <span class="k">return</span> <span class="s">f"Hello, {name}!"</span>
+
+<span class="c"># Функция с параметрами по умолчанию</span>
+<span class="k">def</span> <span class="k">power</span>(base, exp=<span class="s">2</span>):
+    <span class="k">return</span> base ** exp
+
+<span class="c"># Lambda функция</span>
+add = <span class="k">lambda</span> x, y: x + y
+
+<span class="c"># *args и **kwargs</span>
+<span class="k">def</span> <span class="k">sum_all</span>(*args):
+    <span class="k">return</span> <span class="k">sum</span>(args)
+
+<span class="k">def</span> <span class="k">print_info</span>(**kwargs):
+    <span class="k">for</span> key, value <span class="k">in</span> kwargs.items():
+        <span class="k">print</span>(<span class="s">f"{key}: {value}"</span>)
+
+<span class="k">print</span>(greet(<span class="s">"Alice"</span>))  <span class="c"># Hello, Alice!</span>
+<span class="k">print</span>(power(<span class="s">2</span>, <span class="s">3</span>))     <span class="c"># 8</span>
+<span class="k">print</span>(add(<span class="s">5</span>, <span class="s">3</span>))        <span class="c"># 8</span></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. CLASSES & OOP -->
+        <article class="card">
+          <div class="card-header">
+            <span class="card-title">Классы и ООП</span>
+            <span class="badge b-python">OOP</span>
+          </div>
+          <div class="card-body">
+            <div class="code-container">
+              <span class="code-label">PYTHON</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="code-block"><span class="k">class</span> <span class="k">Person</span>:
+    <span class="c"># Конструктор</span>
+    <span class="k">def</span> <span class="k">__init__</span>(self, name, age):
+        self.name = name
+        self.age = age
+    
+    <span class="c"># Метод экземпляра</span>
+    <span class="k">def</span> <span class="k">greet</span>(self):
+        <span class="k">return</span> <span class="s">f"Hi, I'm {self.name}"</span>
+    
+    <span class="c"># Метод класса</span>
+    <span class="k">@classmethod</span>
+    <span class="k">def</span> <span class="k">from_birth_year</span>(cls, name, year):
+        age = <span class="s">2024</span> - year
+        <span class="k">return</span> cls(name, age)
+    
+    <span class="c"># Статический метод</span>
+    <span class="k">@staticmethod</span>
+    <span class="k">def</span> <span class="k">is_adult</span>(age):
+        <span class="k">return</span> age &gt;= <span class="s">18</span>
+    
+    <span class="c"># Строковое представление</span>
+    <span class="k">def</span> <span class="k">__str__</span>(self):
+        <span class="k">return</span> <span class="s">f"{self.name}, {self.age} лет"</span>
+
+<span class="c"># Создание объекта</span>
+person = Person(<span class="s">"Alice"</span>, <span class="s">25</span>)
+<span class="k">print</span>(person.greet())  <span class="c"># Hi, I'm Alice</span>
+<span class="k">print</span>(person)          <span class="c"># Alice, 25 лет</span></pre>
+            </div>
+            <table class="attr-table">
+              <tr>
+                <th>Метод</th>
+                <th>Описание</th>
+              </tr>
+              <tr>
+                <td><span class="attr-name">__init__</span></td>
+                <td class="attr-desc">Конструктор класса</td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">__str__</span></td>
+                <td class="attr-desc">Строковое представление</td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">__repr__</span></td>
+                <td class="attr-desc">Официальное представление</td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">@classmethod</span></td>
+                <td class="attr-desc">Метод класса (cls)</td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">@staticmethod</span></td>
+                <td class="attr-desc">Статический метод</td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">@property</span></td>
+                <td class="attr-desc">Геттер свойства</td>
+              </tr>
+            </table>
+          </div>
+        </article>
+
+        <!-- 6. INHERITANCE -->
+        <article class="card">
+          <div class="card-header">
+            <span class="card-title">Наследование</span>
+            <span class="badge b-python">OOP</span>
+          </div>
+          <div class="card-body">
+            <div class="code-container">
+              <span class="code-label">PYTHON</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="code-block"><span class="k">class</span> <span class="k">Animal</span>:
+    <span class="k">def</span> <span class="k">__init__</span>(self, name):
+        self.name = name
+    
+    <span class="k">def</span> <span class="k">speak</span>(self):
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="k">Dog</span>(Animal):
+    <span class="k">def</span> <span class="k">speak</span>(self):
+        <span class="k">return</span> <span class="s">f"{self.name} говорит: Гав!"</span>
+
+<span class="k">class</span> <span class="k">Cat</span>(Animal):
+    <span class="k">def</span> <span class="k">speak</span>(self):
+        <span class="k">return</span> <span class="s">f"{self.name} говорит: Мяу!"</span>
+
+<span class="c"># Множественное наследование</span>
+<span class="k">class</span> <span class="k">FlyingDog</span>(Dog, Animal):
+    <span class="k">pass</span>
+
+dog = Dog(<span class="s">"Бобик"</span>)
+cat = Cat(<span class="s">"Мурка"</span>)
+<span class="k">print</span>(dog.speak())  <span class="c"># Бобик говорит: Гав!</span>
+<span class="k">print</span>(cat.speak())  <span class="c"># Мурка говорит: Мяу!</span></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- 7. FILE HANDLING -->
+        <article class="card">
+          <div class="card-header">
+            <span class="card-title">Работа с файлами</span>
+            <span class="badge b-python">IO</span>
+          </div>
+          <div class="card-body">
+            <div class="code-container">
+              <span class="code-label">PYTHON</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="code-block"><span class="c"># Чтение файла</span>
+<span class="k">with</span> <span class="k">open</span>(<span class="s">"file.txt"</span>, <span class="s">"r"</span>, encoding=<span class="s">"utf-8"</span>) <span class="k">as</span> f:
+    content = f.read()
+    lines = f.readlines()
+
+<span class="c"># Запись в файл</span>
+<span class="k">with</span> <span class="k">open</span>(<span class="s">"file.txt"</span>, <span class="s">"w"</span>, encoding=<span class="s">"utf-8"</span>) <span class="k">as</span> f:
+    f.write(<span class="s">"Hello, World!"</span>)
+    f.writelines([<span class="s">"Line 1\n"</span>, <span class="s">"Line 2\n"</span>])
+
+<span class="c"># Режимы открытия</span>
+<span class="c"># "r" - чтение (по умолчанию)</span>
+<span class="c"># "w" - запись (перезаписывает)</span>
+<span class="c"># "a" - добавление в конец</span>
+<span class="c"># "r+" - чтение и запись</span>
+<span class="c"># "b" - бинарный режим</span></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- 8. EXCEPTIONS -->
+        <article class="card">
+          <div class="card-header">
+            <span class="card-title">Обработка исключений</span>
+            <span class="badge b-python">Error</span>
+          </div>
+          <div class="card-body">
+            <div class="code-container">
+              <span class="code-label">PYTHON</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="code-block"><span class="k">try</span>:
+    result = <span class="s">10</span> / <span class="s">0</span>
+<span class="k">except</span> ZeroDivisionError <span class="k">as</span> e:
+    <span class="k">print</span>(<span class="s">f"Ошибка: {e}"</span>)
+<span class="k">except</span> Exception <span class="k">as</span> e:
+    <span class="k">print</span>(<span class="s">f"Другая ошибка: {e}"</span>)
+<span class="k">else</span>:
+    <span class="k">print</span>(<span class="s">"Все хорошо"</span>)
+<span class="k">finally</span>:
+    <span class="k">print</span>(<span class="s">"Всегда выполняется"</span>)
+
+<span class="c"># Вызов исключения</span>
+<span class="k">raise</span> ValueError(<span class="s">"Неверное значение"</span>)
+
+<span class="c"># Создание своего исключения</span>
+<span class="k">class</span> <span class="k">MyError</span>(Exception):
+    <span class="k">pass</span></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- 9. MODULES -->
+        <article class="card">
+          <div class="card-header">
+            <span class="card-title">Модули и импорты</span>
+            <span class="badge b-python">Modules</span>
+          </div>
+          <div class="card-body">
+            <div class="code-container">
+              <span class="code-label">PYTHON</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="code-block"><span class="c"># Импорт модуля</span>
+<span class="k">import</span> math
+<span class="k">print</span>(math.sqrt(<span class="s">16</span>))  <span class="c"># 4.0</span>
+
+<span class="c"># Импорт конкретных функций</span>
+<span class="k">from</span> datetime <span class="k">import</span> datetime, date
+
+<span class="c"># Импорт с алиасом</span>
+<span class="k">import</span> numpy <span class="k">as</span> np
+
+<span class="c"># Импорт всего</span>
+<span class="k">from</span> module <span class="k">import</span> *
+
+<span class="c"># Собственный модуль</span>
+<span class="k">from</span> mymodule <span class="k">import</span> my_function
+
+<span class="c"># Установка пакетов</span>
+<span class="c"># pip install package_name</span>
+<span class="c"># pip install -r requirements.txt</span></pre>
+            </div>
+            <table class="attr-table">
+              <tr>
+                <th>Модуль</th>
+                <th>Описание</th>
+              </tr>
+              <tr>
+                <td><span class="attr-name">os</span></td>
+                <td class="attr-desc">Операционная система</td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">sys</span></td>
+                <td class="attr-desc">Системные параметры</td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">json</span></td>
+                <td class="attr-desc">Работа с JSON</td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">re</span></td>
+                <td class="attr-desc">Регулярные выражения</td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">datetime</span></td>
+                <td class="attr-desc">Дата и время</td>
+              </tr>
+              <tr>
+                <td><span class="attr-name">random</span></td>
+                <td class="attr-desc">Случайные числа</td>
+              </tr>
+            </table>
           </div>
         </article>
       </div>
@@ -1825,6 +2300,7 @@ console.<span class="k">log</span>(<span class="s">"Click!"</span>);
       event.target.classList.add("active");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
     function filterCards() {
       const input = document.querySelector(".search-input").value.toLowerCase();
       const cards = document.querySelectorAll(".card");
@@ -1840,6 +2316,7 @@ console.<span class="k">log</span>(<span class="s">"Click!"</span>);
         }
       });
     }
+
     function copyCode(btn) {
       const codeBox = btn.parentElement;
       const clone = codeBox.cloneNode(true);
