@@ -36,7 +36,13 @@ https://normanramm.github.io/WebEncyclopediaVladAvrely/
 - ✅ **Apple-style** дизайн минималистичный и элегантный интерфейс
 - ✅ **Быстрая навигация** переключение между разделами без перезагрузки
 
-## 🚀 Быстрый старт
+### 🚀 Быстрый старт
+
+<!-- Бейджи действий -->
+
+[![Clone](https://img.shields.io/badge/📥_Clone-2ea44f?style=for-the-badge&logo=git&logoColor=white)](https://github.com/Normanramm/WebEncyclopediaVladAvrely)
+[![Download ZIP](https://img.shields.io/badge/📦_ZIP-Download-181717?style=for-the-badge&logo=github)](https://github.com/Normanramm/WebEncyclopediaVladAvrely/archive/refs/heads/main.zip)
+[![Fork](https://img.shields.io/badge/🍴_Fork-Repository-f7df1e?style=for-the-badge&logo=github&logoColor=black)](https://github.com/Normanramm/WebEncyclopediaVladAvrely/fork)
 
 ```bash
 # Клонируй репозиторий
