@@ -13,6 +13,13 @@ https://normanramm.github.io/WebEncyclopediaVladAvrely/
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-3776AB?style=for-the-badge&logo=opensourceinitiative&logoColor=white)
+![Last Commit](https://img.shields.io/github/last-commit/Normanramm/PythonAvrely?style=for-the-badge&color=2ea44f)
+![Repo Size](https://img.shields.io/github/repo-size/Normanramm/PythonAvrely?style=for-the-badge&color=blueviolet)
+![Stars](https://img.shields.io/github/stars/Normanramm/PythonAvrely?style=for-the-badge&color=yellow)
+![Forks](https://img.shields.io/github/forks/Normanramm/PythonAvrely?style=for-the-badge&color=blue)
+![Languages](https://img.shields.io/github/languages/count/Normanramm/PythonAvrely?style=for-the-badge&color=orange)
+![Build](https://img.shields.io/github/actions/workflow/status/Normanramm/PythonAvrely/ci.yml?style=for-the-badge&logo=github)
 
 > **Полный справочник по HTML5, CSS3 и JavaScript** с живыми примерами и визуальным отображением каждого тега и свойства. Создан в стиле Apple — минималистично, элегантно, понятно.
 
