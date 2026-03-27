@@ -1,4 +1,11 @@
+<div align="center">
+  
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&duration=3500&color=58A6FF&center=true&vCenter=true&multiline=false&lines=🌟+Web Encyclopedia Vlad Avrely;HTML+%26+CSS+JavaScript+Python;by+Vladislav" alt="Typing SVG" />
+
+</div>
+
 # 🌟 Web Encyclopedia Vlad Avrely
+
 https://normanramm.github.io/WebEncyclopediaVladAvrely/
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
@@ -36,3 +43,4 @@ cd WebEncyclopediaVladAvrely
 open index.html
 
 
+```
