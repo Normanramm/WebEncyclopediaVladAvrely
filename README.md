@@ -19,7 +19,6 @@ https://normanramm.github.io/WebEncyclopediaVladAvrely/
 ![Stars](https://img.shields.io/github/stars/Normanramm/PythonAvrely?style=for-the-badge&color=yellow)
 ![Forks](https://img.shields.io/github/forks/Normanramm/PythonAvrely?style=for-the-badge&color=blue)
 ![Languages](https://img.shields.io/github/languages/count/Normanramm/PythonAvrely?style=for-the-badge&color=orange)
-![Build](https://img.shields.io/github/actions/workflow/status/Normanramm/PythonAvrely/ci.yml?style=for-the-badge&logo=github)
 
 > **Полный справочник по HTML5, CSS3 и JavaScript** с живыми примерами и визуальным отображением каждого тега и свойства. Создан в стиле Apple — минималистично, элегантно, понятно.
 
