@@ -14,6 +14,22 @@
     img, video, iframe { max-width: 100%; height: auto; }
     /* Отступы для контента на узких экранах */
     main, section, article, .container { padding: 0 12px; }
+
+/* Горизонтальный скролл навигации на мобильных */
+.nav-tabs-scroll {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+    touch-action: pan-x; /* Запрещает вертикальный скролл при свайпе по табам */
+    gap: 10px;
+    padding: 12px 4px;
+    scrollbar-width: none; /* Скрыть скроллбар в Firefox */
+}
+.nav-tabs-scroll::-webkit-scrollbar { display: none; } /* Скрыть в Chrome/Safari */
+.nav-tabs-scroll > * { flex-shrink: 0; } /* Запретить сжатие кнопок */
+
+
 :root {
 --bg-body: #f5f5f7;
 --bg-card: #ffffff;
@@ -552,14 +568,14 @@ display: flex !important;
 <div class="logo-icon">VA</div>
 <span>Web Encyclopedia Vlad Avrely</span>
 </div>
-<div class="tabs">
-<button class="tab active" onclick="switchTab('html', this)">HTML5</button>
-<button class="tab" onclick="switchTab('css', this)">CSS3</button>
-<button class="tab" onclick="switchTab('js', this)">JavaScript</button>
-<button class="tab" onclick="switchTab('python', this)">Python</button>
-<button class="tab" onclick="switchTab('sql', this)">SQL</button>
-<button class="tab" onclick="switchTab('postgres', this)">PostgreSQL</button>
-<button class="tab" onclick="switchTab('algorithms', this)">Алгоритмы</button>
+<div class="nav-tabs-scroll">
+    <a href="#html5">HTML5</a> 
+    <a href="#css3">CSS3</a> 
+    <a href="#js">JS</a> 
+    <a href="#python">Python</a> 
+    <a href="#sql">SQL</a> 
+    <a href="#pgsql">PostgreSQL</a> 
+    <a href="#algo">Алгоритмы</a>
 </div>
 <div class="search-box">
 <span class="search-icon">🔍</span>
