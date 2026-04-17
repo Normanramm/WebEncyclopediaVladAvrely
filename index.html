@@ -41,7 +41,7 @@
             }
         }
 
-        /* 🔹 Global Reset & Mobile Base */
+        /* Global Reset & Mobile Base */
         *,
         *::before,
         *::after {
@@ -86,7 +86,7 @@
             font-family: "SF Mono", Monaco, Consolas, monospace;
         }
 
-        /* 🔹 Header & Nav */
+        /* Header & Nav */
         header {
             position: sticky;
             top: 0;
@@ -133,7 +133,7 @@
             font-size: 14px;
         }
 
-        /* 🔹 Tabs - Fixed Mobile Horizontal Scroll */
+        /* Tabs - Fixed Mobile Horizontal Scroll */
         .tabs {
             display: flex;
             width: 100%;
@@ -176,7 +176,7 @@
             color: var(--text-main);
         }
 
-        /* 🔹 Search */
+        /* Search */
         .search-box {
             width: 100%;
             position: relative;
@@ -206,7 +206,7 @@
             color: var(--text-sec);
         }
 
-        /* 🔹 Main & Sections */
+        /* Main & Sections */
         main {
             max-width: 1400px;
             margin: 24px auto 0;
@@ -257,7 +257,7 @@
             margin: 0 auto;
         }
 
-        /* 🔹 Grid & Cards */
+        /* Grid & Cards */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr));
@@ -352,7 +352,7 @@
             color: #5a32a3;
         }
 
-        /* 🔹 Code & Preview */
+        /* Code & Preview */
         .code-container {
             background: var(--bg-code);
             border-radius: 12px;
@@ -416,7 +416,8 @@
             background: var(--bg-preview);
             border: 2px dashed var(--border);
             border-radius: 12px;
-            padding: 16px;
+            /* 🔧 Увеличен отступ сверху, чтобы лейбл помещался внутри */
+            padding: 24px 16px 16px 16px;
             position: relative;
             min-height: 100px;
             display: flex;
@@ -428,8 +429,9 @@
 
         .preview-label {
             position: absolute;
-            top: -10px;
-            left: 16px;
+            /* Лейбл теперь строго внутри контейнера, ничего не срезается */
+            top: 10px;
+            left: 12px;
             font-size: 9px;
             color: var(--text-sec);
             font-weight: 700;
@@ -447,7 +449,7 @@
             max-width: 100%;
         }
 
-        /* 🔹 Tables */
+        /* Tables */
         .attr-table {
             width: 100%;
             font-size: 12px;
@@ -523,7 +525,7 @@
             }
         }
 
-        /* 🔹 Syntax Highlighting */
+        /* Syntax Highlighting */
         .t {
             color: var(--syn-tag);
         }
@@ -545,7 +547,7 @@
             color: var(--syn-kw);
         }
 
-        /* 🔹 Form Inputs */
+        /* Form Inputs */
         .form-input {
             width: 100%;
             padding: 10px 12px;
@@ -572,7 +574,7 @@
             margin-bottom: 4px;
         }
 
-        /* 🔹 Footer & Toast */
+        /* Footer & Toast */
         footer {
             text-align: center;
             padding: 30px 16px;
@@ -608,7 +610,7 @@
             opacity: 1;
         }
 
-        /* 🔹 Mobile Optimizations */
+        /* Mobile Optimizations */
         @media (max-width: 768px) {
             .section-title {
                 font-size: 26px;
@@ -1220,7 +1222,8 @@
                             <tr>
                                 <td><span class="attr-name">type</span></td>
                                 <td><span class="attr-val">"audio/mpeg"</span> <span class="attr-val">"audio/ogg"</span>
-                                    <span class="attr-val">"audio/wav"</span></td>
+                                    <span class="attr-val">"audio/wav"</span>
+                                </td>
                                 <td class="attr-desc">MIME тип файла</td>
                             </tr>
                         </table>
@@ -1765,7 +1768,8 @@
                                     <kbd>Ctrl+C</kbd></span>
                                 <span
                                     style="background: var(--bg-preview); padding: 8px 12px; border-radius: 6px; font-size: 12px;">📍
-                                    <address>Москва</address></span>
+                                    <address>Москва</address>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -2750,11 +2754,13 @@
                                 <div style="margin-bottom: 6px;"><span style="color: var(--syn-kw);">typeof</span> name
                                     = <span style="color: var(--syn-str);">"string"</span></div>
                                 <div style="margin-bottom: 6px;"><span style="color: var(--syn-kw);">typeof</span> age =
-                                    <span style="color: var(--syn-str);">"number"</span></div>
+                                    <span style="color: var(--syn-str);">"number"</span>
+                                </div>
                                 <div style="margin-bottom: 6px;"><span style="color: var(--syn-kw);">typeof</span>
                                     isTrue = <span style="color: var(--syn-str);">"boolean"</span></div>
                                 <div style="margin-bottom: 6px;"><span style="color: var(--syn-kw);">typeof</span> arr =
-                                    <span style="color: var(--syn-str);">"object"</span></div>
+                                    <span style="color: var(--syn-str);">"object"</span>
+                                </div>
                                 <div><span style="color: var(--syn-kw);">typeof</span> null = <span
                                         style="color: var(--syn-str);">"object"</span></div>
                             </div>
