@@ -568,14 +568,14 @@ display: flex !important;
 <div class="logo-icon">VA</div>
 <span>Web Encyclopedia Vlad Avrely</span>
 </div>
-<div class="nav-tabs-scroll">
-    <a href="#html5">HTML5</a> 
-    <a href="#css3">CSS3</a> 
-    <a href="#js">JS</a> 
-    <a href="#python">Python</a> 
-    <a href="#sql">SQL</a> 
-    <a href="#pgsql">PostgreSQL</a> 
-    <a href="#algo">Алгоритмы</a>
+<div class="tabs">
+<button class="tab active" onclick="switchTab('html', this)">HTML5</button>
+<button class="tab" onclick="switchTab('css', this)">CSS3</button>
+<button class="tab" onclick="switchTab('js', this)">JavaScript</button>
+<button class="tab" onclick="switchTab('python', this)">Python</button>
+<button class="tab" onclick="switchTab('sql', this)">SQL</button>
+<button class="tab" onclick="switchTab('postgres', this)">PostgreSQL</button>
+<button class="tab" onclick="switchTab('algorithms', this)">Алгоритмы</button>
 </div>
 <div class="search-box">
 <span class="search-icon">🔍</span>
