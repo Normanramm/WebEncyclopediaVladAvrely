@@ -15,19 +15,24 @@
     /* Отступы для контента на узких экранах */
     main, section, article, .container { padding: 0 12px; }
 
-/* Горизонтальный скролл навигации на мобильных */
-.nav-tabs-scroll {
+
+/* Фикс вкладок на мобильных */
+.tabs {
     display: flex;
+    flex-wrap: nowrap;
     overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
-    touch-action: pan-x; /* Запрещает вертикальный скролл при свайпе по табам */
+    -webkit-overflow-scrolling: touch; /* Плавный свайп на iOS */
     gap: 10px;
     padding: 12px 4px;
     scrollbar-width: none; /* Скрыть скроллбар в Firefox */
 }
-.nav-tabs-scroll::-webkit-scrollbar { display: none; } /* Скрыть в Chrome/Safari */
-.nav-tabs-scroll > * { flex-shrink: 0; } /* Запретить сжатие кнопок */
+.tabs::-webkit-scrollbar { 
+    display: none; /* Скрыть скроллбар в Chrome/Safari */
+}
+.tabs .tab {
+    flex-shrink: 0; /* Запретить сжатие кнопок */
+    white-space: nowrap; /* Запретить перенос текста внутри кнопок */
+}
 
 
 :root {
