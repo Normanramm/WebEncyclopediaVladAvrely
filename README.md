@@ -12,6 +12,9 @@ https://normanramm.github.io/WebEncyclopediaVladAvrely/
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Algorithms](https://img.shields.io/badge/Algorithms-2ECC71?style=for-the-badge&logo=code&logoColor=white)
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-3776AB?style=for-the-badge&logo=opensourceinitiative&logoColor=white)
 ![Last Commit](https://img.shields.io/github/last-commit/Normanramm/WebEncyclopediaVladAvrely?style=for-the-badge&color=2ea44f)
@@ -28,6 +31,9 @@ https://normanramm.github.io/WebEncyclopediaVladAvrely/
 - ✅ **CSS свойства** с интерактивными примерами
 - ✅ **JavaScript конструкции** с живым выводом
 - ✅ **Python** синтаксис и примеры
+- ✅ **SQL** справочник с примерами
+- ✅ **PostgreSQL** справочник с примерами
+- ✅ **Algorithms** справочник с примерами
 - ✅ **Тёмная тема** (автоматически подстраивается под систему)
 - ✅ **Поиск** мгновенный поиск по всем тегам и свойствам
 - ✅ **Копирование кода** копирование примеров одним кликом
