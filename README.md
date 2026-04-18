@@ -1,6 +1,6 @@
 <div align="center">
   
-<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&duration=3500&color=58A6FF&center=true&vCenter=true&multiline=false&lines=Web+Encyclopedia+VladAvrely;HTML+CSS+JavaScript+Python;by+Vladislav" alt="Typing SVG" />
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=24&duration=3500&color=58A6FF&center=true&vCenter=true&multiline=false&lines=Web+Encyclopedia+VladAvrely;HTML+CSS+JavaScript+Python+SQLAlchemy+SQL+PostgreSQL+Algorithms+FastAPI+Flask+Django;by+Vladislav" alt="Typing SVG" />
 
 </div>
 
@@ -42,9 +42,6 @@ https://normanramm.github.io/WebEncyclopediaVladAvrely/
 - ✅ **FastAPI** современный асинхронный фреймворк для создания REST API с автоматической документацией
 - ✅ **Flask** лёгкий микрофреймворк для создания веб-приложений с полной гибкостью
 - ✅ **Django** полнофункциональный фреймворк для разработки масштабируемых веб-приложений
-
-
-
 
 - ✅ **Тёмная тема** (автоматически подстраивается под систему)
 - ✅ **Поиск** мгновенный поиск по всем тегам и свойствам
