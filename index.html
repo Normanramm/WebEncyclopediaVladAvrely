@@ -411,6 +411,12 @@
             opacity: 1;
         }
 
+        @media (hover: none), (max-width: 768px) {
+            .copy-btn {
+                opacity: 1;
+            }
+        }
+
         .code-block {
             padding: 16px;
             font-size: 12px;
@@ -8128,11 +8134,45 @@ AUTH_USER_MODEL = <span class="s">'myapp.CustomUser'</span>
             const btnClone = clone.querySelector(".copy-btn");
             if (btnClone) btnClone.remove();
             const text = clone.innerText.trim();
-            navigator.clipboard.writeText(text).then(() => {
+
+            function showToast() {
                 const toast = document.getElementById("toast");
                 toast.classList.add("show");
                 setTimeout(() => toast.classList.remove("show"), 2500);
-            });
+            }
+
+            function fallbackCopy(value) {
+                const textarea = document.createElement("textarea");
+                textarea.value = value;
+                textarea.setAttribute("readonly", "");
+                textarea.style.position = "fixed";
+                textarea.style.top = "0";
+                textarea.style.left = "0";
+                textarea.style.width = "2em";
+                textarea.style.height = "2em";
+                textarea.style.padding = "0";
+                textarea.style.border = "none";
+                textarea.style.outline = "none";
+                textarea.style.fontSize = "16px";
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                textarea.setSelectionRange(0, value.length);
+                let ok = false;
+                try {
+                    ok = document.execCommand("copy");
+                } catch (e) { /* ignore */ }
+                document.body.removeChild(textarea);
+                return ok;
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(showToast).catch(() => {
+                    if (fallbackCopy(text)) showToast();
+                });
+            } else if (fallbackCopy(text)) {
+                showToast();
+            }
         }
 
         function initSqlPreviewNotes() {
