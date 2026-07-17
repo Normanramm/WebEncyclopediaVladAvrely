@@ -390,6 +390,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
+            z-index: 5;
         }
 
         .copy-btn {
@@ -405,6 +406,9 @@
             cursor: pointer;
             transition: 0.2s;
             opacity: 0;
+            z-index: 10;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         .code-container:hover .copy-btn {
@@ -414,6 +418,14 @@
         @media (hover: none), (max-width: 768px) {
             .copy-btn {
                 opacity: 1;
+                min-width: 44px;
+                min-height: 32px;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .code-block {
+                padding-top: 42px;
             }
         }
 
@@ -8130,10 +8142,11 @@ AUTH_USER_MODEL = <span class="s">'myapp.CustomUser'</span>
         }
         function copyCode(btn) {
             const codeBox = btn.parentElement;
+            const pre = codeBox.querySelector(".code-block");
             const clone = codeBox.cloneNode(true);
             const btnClone = clone.querySelector(".copy-btn");
             if (btnClone) btnClone.remove();
-            const text = clone.innerText.trim();
+            const text = (pre ? pre.innerText : clone.innerText).trim();
 
             function showToast() {
                 const toast = document.getElementById("toast");
@@ -8141,21 +8154,34 @@ AUTH_USER_MODEL = <span class="s">'myapp.CustomUser'</span>
                 setTimeout(() => toast.classList.remove("show"), 2500);
             }
 
-            function fallbackCopy(value) {
+            function copyViaSelection(element) {
+                if (!element) return false;
+                const range = document.createRange();
+                range.selectNodeContents(element);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                let ok = false;
+                try {
+                    ok = document.execCommand("copy");
+                } catch (e) { /* ignore */ }
+                sel.removeAllRanges();
+                return ok;
+            }
+
+            function copyViaTextarea(value) {
                 const textarea = document.createElement("textarea");
                 textarea.value = value;
-                textarea.setAttribute("readonly", "");
                 textarea.style.position = "fixed";
                 textarea.style.top = "0";
                 textarea.style.left = "0";
-                textarea.style.width = "2em";
-                textarea.style.height = "2em";
-                textarea.style.padding = "0";
-                textarea.style.border = "none";
-                textarea.style.outline = "none";
+                textarea.style.opacity = "0";
+                textarea.style.pointerEvents = "none";
                 textarea.style.fontSize = "16px";
+                textarea.style.width = "1px";
+                textarea.style.height = "1px";
                 document.body.appendChild(textarea);
-                textarea.focus();
+                textarea.focus({ preventScroll: true });
                 textarea.select();
                 textarea.setSelectionRange(0, value.length);
                 let ok = false;
@@ -8166,14 +8192,63 @@ AUTH_USER_MODEL = <span class="s">'myapp.CustomUser'</span>
                 return ok;
             }
 
+            function copyViaEditable(value) {
+                const el = document.createElement("div");
+                el.contentEditable = "true";
+                el.textContent = value;
+                el.style.position = "fixed";
+                el.style.top = "0";
+                el.style.left = "0";
+                el.style.opacity = "0";
+                el.style.pointerEvents = "none";
+                document.body.appendChild(el);
+                const range = document.createRange();
+                range.selectNodeContents(el);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                let ok = false;
+                try {
+                    ok = document.execCommand("copy");
+                } catch (e) { /* ignore */ }
+                sel.removeAllRanges();
+                document.body.removeChild(el);
+                return ok;
+            }
+
+            function copySync() {
+                if (pre && copyViaSelection(pre)) return true;
+                if (copyViaTextarea(text)) return true;
+                if (copyViaEditable(text)) return true;
+                return false;
+            }
+
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+            if (isIOS) {
+                if (window.isSecureContext && navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(showToast).catch(() => {
+                        if (copySync()) showToast();
+                    });
+                } else if (copySync()) {
+                    showToast();
+                }
+                return;
+            }
+
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(text).then(showToast).catch(() => {
-                    if (fallbackCopy(text)) showToast();
+                    if (copySync()) showToast();
                 });
-            } else if (fallbackCopy(text)) {
+            } else if (copySync()) {
                 showToast();
             }
         }
+
+        document.querySelectorAll(".copy-btn").forEach((btn) => {
+            btn.type = "button";
+        });
 
         function initSqlPreviewNotes() {
             const sqlSection = document.getElementById("sql");
